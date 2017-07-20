@@ -1,4 +1,5 @@
-var webpack = require("webpack");
+const webpack = require("webpack");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
 	context: __dirname,
@@ -11,25 +12,57 @@ module.exports = {
 	module:{
 		rules: [
 			{
-				test: /\.css$/,
-				use: [ 'style-loader', 'css-loader' ]
+				test: /\.scss$/,
+				use: [
+					{
+						loader: 'style-loader'
+				    },
+					{
+						loader: 'css-loader'
+				    },
+					{
+						loader: 'autoprefixer-loader',
+						options: {
+							   enforse: 'pre'
+						   }
+					},
+					{
+						loader: 'sass-loader'
+					}
+				]
+			},
+			{
+				test: /\.(png|jpg|gif)$/,
+				use: 'url-loader'
 			},
 			{
 				test: /\.js$/,
 				exclude: /(node_modules)/,
-				use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env']
-                    }
-				}
+				use: [
+					{
+	                    loader: 'babel-loader',
+	                    options: {
+	                        presets: ['env']
+	                    }
+					},
+					{
+						loader: "eslint-loader",
+						options: {
+							enforse: 'pre'
+						}
+					}
+				]
 			}
 		]
 	},
-	plugins: [new webpack.optimize.UglifyJsPlugin({
+	plugins: [new UglifyJsPlugin({
 		minimize: true,
+		comments: false,
 		compress: {
 			warnings: false
+		},
+		output: {
+			comments: false
 		}
 	})],
 	devServer: {

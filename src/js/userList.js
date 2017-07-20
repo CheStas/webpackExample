@@ -1,4 +1,4 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
 function userList(users){
     const container = document.getElementById('root');
@@ -6,7 +6,10 @@ function userList(users){
     this.showList = () => {
         sortedUsers.forEach((user) => {
             const div = document.createElement("div");
+            const img = document.createElement('img');
+            img.setAttribute('src', user.photo)
             div.append(user.name + ' ' + user.age);
+            div.appendChild(img);
             container.appendChild(div);
         });
     }
