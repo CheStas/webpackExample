@@ -21,15 +21,14 @@ module.exports = {
 						loader: 'css-loader'
 				    },
 					{
-						loader: 'autoprefixer-loader',
-						options: {
-							   enforse: 'pre'
-						   }
-					},
-					{
 						loader: 'sass-loader'
 					}
 				]
+			},
+			{
+				test: /\.scss$/,
+				enforce: 'pre',
+				use: [{loader: 'autoprefixer-loader'}]
 			},
 			{
 				test: /\.(png|jpg|gif)$/,
@@ -44,14 +43,14 @@ module.exports = {
 	                    options: {
 	                        presets: ['env']
 	                    }
-					},
-					{
-						loader: "eslint-loader",
-						options: {
-							enforse: 'pre'
-						}
 					}
 				]
+			},
+			{
+				test: /\.js$/,
+				exclude: /(node_modules)/,
+				enforce: 'pre',
+				use: [ {loader: "eslint-loader"} ]
 			}
 		]
 	},
